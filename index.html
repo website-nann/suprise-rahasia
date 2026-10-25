@@ -2,70 +2,68 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Untuk Acha 💕</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body { height: 100%; overflow: hidden; }
 
   body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 40%, #ffc2d1 70%, #ffb3c1 100%);
     background-size: 300% 300%;
     animation: gradientShift 12s ease infinite;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    overflow: hidden;
     position: relative;
-    padding: 16px;
   }
   @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
 
-  /* ===== BACKGROUND PARTIKEL ===== */
   .bg-particle {
-    position: fixed;
-    top: -10vh;
-    z-index: 0;
-    pointer-events: none;
-    animation: fall linear infinite;
+    position: fixed; top: -10vh; z-index: 0;
+    pointer-events: none; animation: fall linear infinite;
   }
-  @keyframes fall {
-    to { transform: translateY(120vh) rotate(720deg); }
-  }
+  @keyframes fall { to { transform: translateY(120vh) rotate(720deg); } }
 
-  /* Bintang berkelip */
   .star {
-    position: fixed;
-    color: #fff;
-    font-size: 12px;
-    z-index: 0;
-    pointer-events: none;
-    animation: twinkle 2s ease-in-out infinite;
+    position: fixed; color: #fff; font-size: 12px; z-index: 0;
+    pointer-events: none; animation: twinkle 2s ease-in-out infinite;
   }
   @keyframes twinkle {
     0%, 100% { opacity: 0.2; transform: scale(0.8); }
     50% { opacity: 1; transform: scale(1.3); }
   }
 
+  /* ===== STAGE (wrapper scroll) ===== */
+  .stage {
+    position: fixed; inset: 0;
+    display: flex; align-items: flex-start; justify-content: center;
+    z-index: 2; padding: 20px 14px;
+    overflow-y: auto; overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .stage::-webkit-scrollbar { width: 8px; }
+  .stage::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 4px; }
+  .stage::-webkit-scrollbar-thumb {
+    background: linear-gradient(#ff4d6d, #ff85a1);
+    border-radius: 4px;
+  }
+
   /* ===== SLIDE ===== */
   .slide {
     display: none;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 32px 26px;
+    background: rgba(255, 255, 255, 0.96);
+    padding: 28px 22px;
     border-radius: 28px;
     box-shadow: 0 20px 60px rgba(255, 105, 135, 0.45), 0 0 0 1px rgba(255,255,255,0.5) inset;
     text-align: center;
-    max-width: 440px;
-    width: 100%;
-    z-index: 2;
-    position: relative;
+    width: 100%; max-width: 440px;
     backdrop-filter: blur(10px);
-    max-height: 94vh;
-    overflow-y: auto;
+    margin: auto 0;
+    flex-shrink: 0;
   }
   .slide.active {
     display: block;
@@ -77,22 +75,21 @@
   }
 
   #slideEnvelope {
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
+    background: transparent; box-shadow: none;
+    backdrop-filter: none; display: none;
+    text-align: center; padding: 40px 20px;
+  }
+  #slideEnvelope.active {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: calc(100vh - 40px);
   }
 
   /* ===== AMPLOP 3D ===== */
-  .envelope-wrap {
-    perspective: 800px;
-    display: inline-block;
-  }
+  .envelope-wrap { perspective: 800px; display: inline-block; }
   .envelope {
-    width: 200px;
-    height: 140px;
-    margin: 0 auto;
-    position: relative;
-    cursor: pointer;
+    width: 220px; height: 150px;
+    margin: 0 auto; position: relative; cursor: pointer;
     animation: float 2.5s ease-in-out infinite;
     transform-style: preserve-3d;
     transition: transform 0.4s;
@@ -105,52 +102,41 @@
   .envelope-body {
     width: 100%; height: 100%;
     background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
-    border-radius: 10px;
-    position: relative;
+    border-radius: 10px; position: relative;
     box-shadow: 0 20px 50px rgba(255, 77, 109, 0.6);
   }
   .envelope-flap {
-    position: absolute;
-    top: 0; left: 0;
+    position: absolute; top: 0; left: 0;
     width: 0; height: 0;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    border-top: 75px solid #ff85a1;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-top: 82px solid #ff85a1;
     border-radius: 10px 10px 0 0;
     transform-origin: top;
     transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 3;
   }
   .envelope.open .envelope-flap { transform: rotateX(180deg); }
-
-  /* Surat keluar */
   .envelope-paper {
-    position: absolute;
-    bottom: 12px; left: 50%;
+    position: absolute; bottom: 12px; left: 50%;
     transform: translateX(-50%) translateY(0) scale(0.85);
     width: 84%; height: 72%;
     background: linear-gradient(#fff, #fff5f7);
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    opacity: 0;
-    z-index: 2;
+    opacity: 0; z-index: 2;
     transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
   }
   .envelope.open .envelope-paper {
-    transform: translateX(-50%) translateY(-58px) scale(1);
+    transform: translateX(-50%) translateY(-62px) scale(1);
     opacity: 1;
   }
-
   .envelope-heart {
-    position: absolute;
-    top: 55%; left: 50%;
+    position: absolute; top: 55%; left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 44px;
-    z-index: 4;
+    font-size: 46px; z-index: 4;
     animation: beat 1.2s infinite;
     filter: drop-shadow(0 4px 12px rgba(255,77,109,0.6));
   }
@@ -158,12 +144,9 @@
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
     50% { transform: translate(-50%, -50%) scale(1.18); }
   }
-
   .tap-text {
-    margin-top: 40px;
-    color: #d6336c;
-    font-weight: 600;
-    font-size: 1.1rem;
+    margin-top: 44px; color: #d6336c;
+    font-weight: 600; font-size: 1.1rem;
     animation: pulse 1.5s infinite;
     text-shadow: 0 2px 10px rgba(255,255,255,0.8);
   }
@@ -174,20 +157,17 @@
 
   /* ===== SLIDESHOW (Ken Burns) ===== */
   .slideshow {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 18px;
+    position: relative; width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 380px;
+    border-radius: 20px; overflow: hidden;
+    margin-bottom: 16px;
     box-shadow: 0 15px 35px rgba(255, 105, 135, 0.35), 0 0 0 4px #fff;
   }
   .slideshow img {
-    position: absolute;
-    top: 0; left: 0;
+    position: absolute; top: 0; left: 0;
     width: 100%; height: 100%;
-    object-fit: cover;
-    opacity: 0;
+    object-fit: cover; opacity: 0;
     transition: opacity 1.2s ease-in-out;
     transform: scale(1);
   }
@@ -200,31 +180,40 @@
     to { transform: scale(1.12) translate(-2%, -2%); }
   }
 
+  /* Dots indicator */
+  .dots {
+    display: flex; justify-content: center; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .dots span {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ffb3c1;
+    transition: all 0.3s;
+  }
+  .dots span.active {
+    background: #ff4d6d;
+    width: 22px; border-radius: 4px;
+  }
+
   /* ===== TEKS ===== */
   h1 {
-    color: #d6336c;
-    font-size: 1.5rem;
-    margin-bottom: 12px;
-    line-height: 1.35;
+    color: #d6336c; font-size: 1.5rem;
+    margin-bottom: 12px; line-height: 1.35;
     animation: glowText 2.5s ease-in-out infinite;
   }
   @keyframes glowText {
     0%, 100% { text-shadow: 0 0 8px rgba(255,77,109,0.3); }
     50% { text-shadow: 0 0 20px rgba(255,77,109,0.7), 0 0 30px rgba(255,133,161,0.5); }
   }
-
   p.text-body {
-    color: #555;
-    font-size: 0.95rem;
-    line-height: 1.75;
-    margin-bottom: 18px;
+    color: #555; font-size: 0.95rem;
+    line-height: 1.75; margin-bottom: 20px;
   }
   p.text-body strong { color: #d6336c; }
 
   .emoji-big {
-    font-size: 56px;
-    display: block;
-    margin-bottom: 12px;
+    font-size: 56px; display: block; margin-bottom: 12px;
     animation: beat 1.2s infinite;
     filter: drop-shadow(0 6px 15px rgba(255,77,109,0.4));
   }
@@ -233,13 +222,9 @@
   .letter-box {
     background: linear-gradient(135deg, #fff5f7, #ffe8ee);
     border: 2px dashed #ffb3c1;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 18px;
-    text-align: left;
-    font-size: 0.92rem;
-    line-height: 1.75;
-    color: #666;
+    border-radius: 16px; padding: 20px;
+    margin-bottom: 20px; text-align: left;
+    font-size: 0.92rem; line-height: 1.75; color: #666;
     box-shadow: 0 8px 20px rgba(255, 179, 193, 0.25) inset;
     animation: fadeSlide 1s ease;
   }
@@ -251,27 +236,19 @@
 
   /* ===== BUTTONS ===== */
   .buttons {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-    min-height: 54px;
-    position: relative;
+    display: flex; gap: 14px; justify-content: center;
+    flex-wrap: wrap; min-height: 54px; position: relative;
   }
   button {
-    border: none;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.25s;
+    border: none; padding: 14px 32px;
+    border-radius: 50px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.25s;
     letter-spacing: 0.3px;
   }
   #btnYes, #btnNext {
     background: linear-gradient(135deg, #ff4d6d, #ff85a1);
     color: white;
-    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.5), 0 0 0 0 rgba(255,77,109,0.6);
+    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.5);
     animation: pulseGlow 2s infinite;
   }
   @keyframes pulseGlow {
@@ -281,10 +258,8 @@
   #btnYes:hover, #btnNext:hover { transform: translateY(-3px) scale(1.06); }
 
   #btnNo {
-    background: #eee;
-    color: #666;
-    position: fixed;
-    z-index: 50;
+    background: #eee; color: #666;
+    position: fixed; z-index: 50;
     transition: left 0.3s ease, top 0.3s ease, transform 0.2s;
   }
 
@@ -292,54 +267,37 @@
   #slideFinal h1 { font-size: 1.6rem; }
   .pesan-spesial {
     background: linear-gradient(135deg, #ffe0e9, #fff5f7);
-    border-radius: 16px;
-    padding: 20px;
-    margin: 18px 0;
-    font-style: italic;
-    color: #c9184a;
-    font-size: 1rem;
-    line-height: 1.75;
+    border-radius: 16px; padding: 20px;
+    margin: 18px 0; font-style: italic;
+    color: #c9184a; font-size: 1rem; line-height: 1.75;
     border-left: 5px solid #ff4d6d;
     box-shadow: 0 10px 25px rgba(255,77,109,0.15);
     animation: fadeSlide 1.2s ease;
   }
   .wa-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
     background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 700;
+    color: white; padding: 15px 30px;
+    border-radius: 50px; font-size: 1rem; font-weight: 700;
     text-decoration: none;
     box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
-    transition: all 0.25s;
-    margin-top: 8px;
+    transition: all 0.25s; margin-top: 8px;
     animation: pulseGlow 2.5s infinite;
   }
   .wa-btn:hover { transform: translateY(-3px) scale(1.06); }
 
-  /* ===== CONFETTI ===== */
+  /* ===== CONFETTI & HEART BURST ===== */
   .confetti {
-    position: fixed;
-    top: -20px;
-    z-index: 5;
+    position: fixed; top: -20px; z-index: 5;
     animation: confettiFall linear forwards;
-    pointer-events: none;
-    font-size: 20px;
+    pointer-events: none; font-size: 20px;
   }
   @keyframes confettiFall {
     to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
   }
-
-  /* ===== HEART BURST ===== */
   .heart-burst {
-    position: fixed;
-    font-size: 24px;
-    pointer-events: none;
-    z-index: 100;
+    position: fixed; font-size: 24px;
+    pointer-events: none; z-index: 100;
     animation: burst 1.2s ease-out forwards;
   }
   @keyframes burst {
@@ -349,16 +307,11 @@
 
   /* ===== EQUALIZER ===== */
   .equalizer {
-    position: fixed;
-    bottom: 18px;
-    right: 18px;
-    display: none;
-    gap: 3px;
-    align-items: flex-end;
-    height: 24px;
-    padding: 6px 8px;
-    background: rgba(255,255,255,0.85);
-    border-radius: 12px;
+    position: fixed; bottom: 18px; right: 18px;
+    display: none; gap: 3px; align-items: flex-end;
+    height: 26px; padding: 6px 10px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 14px;
     box-shadow: 0 6px 18px rgba(255,105,135,0.4);
     z-index: 10;
   }
@@ -377,77 +330,114 @@
     0%, 100% { height: 6px; }
     50% { height: 22px; }
   }
+
+  /* ===== SCROLL HINT ===== */
+  .scroll-hint {
+    display: none;
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: #d6336c;
+    font-weight: 600;
+    animation: bounce 1.5s infinite;
+  }
+  .scroll-hint.show { display: block; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-height: 700px) {
+    .slideshow { aspect-ratio: 1 / 1; }
+  }
+  @media (max-width: 360px) {
+    .slide { padding: 22px 16px; }
+    h1 { font-size: 1.3rem; }
+    .envelope { width: 180px; height: 124px; }
+    .envelope-flap { border-left: 90px solid transparent; border-right: 90px solid transparent; border-top: 68px solid #ff85a1; }
+  }
 </style>
 </head>
 <body>
 
-<!-- SLIDE 1: AMPLOP -->
-<div class="slide active" id="slideEnvelope">
-  <div class="envelope-wrap">
-    <div class="envelope" id="envelope">
-      <div class="envelope-body">
-        <div class="envelope-paper">💌</div>
-        <div class="envelope-flap"></div>
-        <div class="envelope-heart">💖</div>
+<!-- STAGE = wrapper scroll -->
+<div class="stage" id="stage">
+
+  <!-- SLIDE 1: AMPLOP -->
+  <div class="slide active" id="slideEnvelope">
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope">
+        <div class="envelope-body">
+          <div class="envelope-paper">💌</div>
+          <div class="envelope-flap"></div>
+          <div class="envelope-heart">💖</div>
+        </div>
       </div>
     </div>
-  </div>
-  <p class="tap-text">Ketuk amplopnya ya Acha 💕</p>
-</div>
-
-<!-- SLIDE 2: FOTO + UNGKAPAN -->
-<div class="slide" id="slidePhotos">
-  <div class="slideshow" id="slideshow">
-    <img src="https://i.ibb.co.com/BK3TtmYS/IMG-20261025-WA0133.jpg" alt="Acha" class="active">
-    <img src="https://i.ibb.co.com/7xQFR7jZ/IMG-20261025-WA0135.jpg" alt="Acha">
-    <img src="https://i.ibb.co.com/JjhpfjQF/IMG-20261025-WA0132.jpg" alt="Acha">
-  </div>
-  <h1>Hai Acha 🌸</h1>
-  <p class="text-body">
-    Sejak kenal kamu, aku ngerasa <strong>nyaman</strong> yang susah aku jelasin.<br>
-    Ketawa kamu, cara kamu ngomong, semua bikin hari-hariku lebih cerah.<br><br>
-    Kamu tau nggak? <strong>Kamu itu rumah</strong> buat aku. 🏡💗
-  </p>
-  <div class="buttons">
-    <button id="btnNext">Lanjut ➜</button>
-  </div>
-</div>
-
-<!-- SLIDE 3: SURAT + NEMBAK -->
-<div class="slide" id="slideLetter">
-  <span class="emoji-big">💌</span>
-  <h1>Surat Kecil Buat Acha</h1>
-  <div class="letter-box">
-    <strong>Acha,</strong><br><br>
-    Aku nggak tau harus mulai dari mana, jadi aku tulis aja ya...<br><br>
-    Aku suka sama kamu. Bukan suka yang biasa — aku pengen serius, pengen kamu jadi <strong>pacar aku</strong>, dan semoga suatu hari nanti jadi <strong>yang paling penting</strong> di hidup aku.<br><br>
-    Jadi... <strong>Acha, mau nggak kamu jadi pacarku?</strong> 🥺💖
-  </div>
-  <div class="buttons" id="buttonArea">
-    <button id="btnYes">Mau! 💖</button>
-    <button id="btnNo">Tidak 🙈</button>
-  </div>
-</div>
-
-<!-- SLIDE 4: TERIMA KASIH + PESAN + WA -->
-<div class="slide" id="slideFinal">
-  <span class="emoji-big">🥰</span>
-  <h1>Acha diterima! 💕</h1>
-  <p class="text-body">Terima kasih ya udah jawab <strong>iya</strong>. Ini awal baru buat kita berdua. 💑</p>
-
-  <div class="pesan-spesial">
-    "Aku sayang kamu, okay.<br>
-    Dan aku janji akan sayang + cinta sama kamu terus."<br><br>
-    — <strong>Dynan</strong> 💗
+    <p class="tap-text">Ketuk amplopnya ya Acha 💕</p>
   </div>
 
-  <p class="text-body" style="font-size:0.85rem;color:#888;">
-    Kirim jawabanmu ke aku lewat WhatsApp ya, biar aku tau kamu udah buka website ini 🥺
-  </p>
+  <!-- SLIDE 2: FOTO + UNGKAPAN -->
+  <div class="slide" id="slidePhotos">
+    <div class="slideshow" id="slideshow">
+      <img src="https://i.ibb.co.com/PSWbQCq/IMG-20261025-174312.jpg" alt="Acha" class="active">
+      <img src="https://i.ibb.co.com/m5V61TdT/IMG-20261025-174249.jpg" alt="Acha">
+      <img src="https://i.ibb.co.com/PSWbQCq/IMG-20261025-174312.jpg" alt="Acha">
+    </div>
+    <div class="dots" id="dots">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+    </div>
+    <h1>Hai Acha 🌸</h1>
+    <p class="text-body">
+      Sejak kenal kamu, aku ngerasa <strong>nyaman</strong> yang susah aku jelasin.<br>
+      Ketawa kamu, cara kamu ngomong, semua bikin hari-hariku lebih cerah.<br><br>
+      Kamu tau nggak? <strong>Kamu itu rumah</strong> buat aku. 🏡💗
+    </p>
+    <div class="buttons">
+      <button id="btnNext">Lanjut ➜</button>
+    </div>
+  </div>
 
-  <a class="wa-btn" id="waBtn" href="#" target="_blank">
-    💬 Kirim Jawaban ke Dynan
-  </a>
+  <!-- SLIDE 3: SURAT + NEMBAK -->
+  <div class="slide" id="slideLetter">
+    <span class="emoji-big">💌</span>
+    <h1>Surat Kecil Buat Acha</h1>
+    <div class="letter-box">
+      <strong>Acha,</strong><br><br>
+      Aku nggak tau harus mulai dari mana, jadi aku tulis aja ya...<br><br>
+      Aku suka sama kamu. Bukan suka yang biasa — aku pengen serius, pengen kamu jadi <strong>pacar aku</strong>, dan semoga suatu hari nanti jadi <strong>yang paling penting</strong> di hidup aku.<br><br>
+      Jadi... <strong>Acha, mau nggak kamu jadi pacarku?</strong> 🥺💖
+    </div>
+    <div class="buttons" id="buttonArea">
+      <button id="btnYes">Mau! 💖</button>
+      <button id="btnNo">Tidak 🙈</button>
+    </div>
+    <p class="scroll-hint" id="scrollHint">⬇️ scroll pelan-pelan ya</p>
+  </div>
+
+  <!-- SLIDE 4: TERIMA KASIH + PESAN + WA -->
+  <div class="slide" id="slideFinal">
+    <span class="emoji-big">🥰</span>
+    <h1>Acha diterima! 💕</h1>
+    <p class="text-body">Terima kasih ya udah jawab <strong>iya</strong>. Ini awal baru buat kita berdua. 💑</p>
+
+    <div class="pesan-spesial">
+      "Aku sayang kamu, okay.<br>
+      Dan aku janji akan sayang + cinta sama kamu terus."<br><br>
+      — <strong>Dynan</strong> 💗
+    </div>
+
+    <p class="text-body" style="font-size:0.85rem;color:#888;">
+      Kirim jawabanmu ke aku lewat WhatsApp ya, biar aku tau kamu udah buka website ini 🥺
+    </p>
+
+    <a class="wa-btn" id="waBtn" href="#" target="_blank">
+      💬 Kirim Jawaban ke Dynan
+    </a>
+  </div>
+
 </div>
 
 <!-- AUDIO -->
@@ -492,9 +482,12 @@
   }, 500);
 
   /* ===== SLIDE MANAGEMENT ===== */
+  const stage = document.getElementById('stage');
   function showSlide(id) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+    // Reset scroll ke atas tiap ganti slide
+    stage.scrollTop = 0;
   }
 
   /* ===== SLIDE 1: AMPLOP ===== */
@@ -508,15 +501,10 @@
     opened = true;
     envelope.classList.add('open');
 
-    // Putar musik langsung di event klik (diizinkan browser)
     music.volume = 0.7;
     const playPromise = music.play();
     if (playPromise !== undefined) {
-      playPromise.then(() => {
-        equalizer.classList.add('show');
-      }).catch(() => {
-        // Autoplay diblokir — tetap lanjut
-      });
+      playPromise.then(() => equalizer.classList.add('show')).catch(() => {});
     }
 
     setTimeout(() => showSlide('slidePhotos'), 1200);
@@ -524,12 +512,16 @@
 
   /* ===== SLIDE 2: SLIDESHOW ===== */
   const slides = document.querySelectorAll('#slideshow img');
+  const dots = document.querySelectorAll('#dots span');
   let slideIndex = 0;
   setInterval(() => {
     slides[slideIndex].classList.remove('active');
+    dots[slideIndex].classList.remove('active');
     slideIndex = (slideIndex + 1) % slides.length;
     slides[slideIndex].classList.add('active');
+    dots[slideIndex].classList.add('active');
   }, 3200);
+
   document.getElementById('btnNext').addEventListener('click', () => showSlide('slideLetter'));
 
   /* ===== SLIDE 3: TOMBOL TIDAK MELAYANG ===== */
@@ -545,10 +537,8 @@
   function melayang() {
     const maxX = window.innerWidth - btnNo.offsetWidth - 20;
     const maxY = window.innerHeight - btnNo.offsetHeight - 20;
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-    btnNo.style.left = x + 'px';
-    btnNo.style.top = y + 'px';
+    btnNo.style.left = (Math.random() * maxX) + 'px';
+    btnNo.style.top = (Math.random() * maxY) + 'px';
   }
 
   btnNo.addEventListener('mouseover', melayang);
@@ -573,6 +563,20 @@
     );
     document.getElementById('waBtn').href = `https://wa.me/${nomorWA}?text=${pesan}`;
   }
+
+  /* ===== SCROLL HINT (muncul kalau konten panjang) ===== */
+  function cekScrollHint() {
+    const hint = document.getElementById('scrollHint');
+    const slide = document.getElementById('slideLetter');
+    if (slide.classList.contains('active')) {
+      if (slide.scrollHeight > window.innerHeight - 100) {
+        hint.classList.add('show');
+      } else {
+        hint.classList.remove('show');
+      }
+    }
+  }
+  setInterval(cekScrollHint, 800);
 
   /* ===== HEART BURST ===== */
   function heartBurst(x, y) {
