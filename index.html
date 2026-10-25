@@ -40,27 +40,25 @@
   .stage {
     position: fixed; inset: 0;
     display: flex; align-items: flex-start; justify-content: center;
-    z-index: 2; padding: 20px 14px;
+    z-index: 2; padding: 16px 12px;
     overflow-y: auto; overflow-x: hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
   }
-  .stage::-webkit-scrollbar { width: 8px; }
-  .stage::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 4px; }
-  .stage::-webkit-scrollbar-thumb {
-    background: linear-gradient(#ff4d6d, #ff85a1);
-    border-radius: 4px;
-  }
+  
+  /* SEMBUNYIKAN SCROLLBAR */
+  .stage::-webkit-scrollbar { display: none; }
+  .stage { -ms-overflow-style: none; scrollbar-width: none; }
 
   /* ===== SLIDE ===== */
   .slide {
     display: none;
     background: rgba(255, 255, 255, 0.96);
-    padding: 28px 22px;
-    border-radius: 28px;
-    box-shadow: 0 20px 60px rgba(255, 105, 135, 0.45), 0 0 0 1px rgba(255,255,255,0.5) inset;
+    padding: 24px 20px;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(255, 105, 135, 0.35), 0 0 0 1px rgba(255,255,255,0.5) inset;
     text-align: center;
-    width: 100%; max-width: 440px;
+    width: 100%; max-width: 400px;
     backdrop-filter: blur(10px);
     margin: auto 0;
     flex-shrink: 0;
@@ -70,7 +68,7 @@
     animation: slideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes slideIn {
-    from { transform: translateY(40px) scale(0.85); opacity: 0; filter: blur(8px); }
+    from { transform: translateY(30px) scale(0.9); opacity: 0; filter: blur(8px); }
     to { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
   }
 
@@ -88,7 +86,7 @@
   /* ===== AMPLOP 3D ===== */
   .envelope-wrap { perspective: 800px; display: inline-block; }
   .envelope {
-    width: 220px; height: 150px;
+    width: 200px; height: 140px;
     margin: 0 auto; position: relative; cursor: pointer;
     animation: float 2.5s ease-in-out infinite;
     transform-style: preserve-3d;
@@ -103,14 +101,14 @@
     width: 100%; height: 100%;
     background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
     border-radius: 10px; position: relative;
-    box-shadow: 0 20px 50px rgba(255, 77, 109, 0.6);
+    box-shadow: 0 15px 40px rgba(255, 77, 109, 0.5);
   }
   .envelope-flap {
     position: absolute; top: 0; left: 0;
     width: 0; height: 0;
-    border-left: 110px solid transparent;
-    border-right: 110px solid transparent;
-    border-top: 82px solid #ff85a1;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 75px solid #ff85a1;
     border-radius: 10px 10px 0 0;
     transform-origin: top;
     transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -127,16 +125,16 @@
     opacity: 0; z-index: 2;
     transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
+    font-size: 26px;
   }
   .envelope.open .envelope-paper {
-    transform: translateX(-50%) translateY(-62px) scale(1);
+    transform: translateX(-50%) translateY(-58px) scale(1);
     opacity: 1;
   }
   .envelope-heart {
     position: absolute; top: 55%; left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 46px; z-index: 4;
+    font-size: 44px; z-index: 4;
     animation: beat 1.2s infinite;
     filter: drop-shadow(0 4px 12px rgba(255,77,109,0.6));
   }
@@ -145,8 +143,8 @@
     50% { transform: translate(-50%, -50%) scale(1.18); }
   }
   .tap-text {
-    margin-top: 44px; color: #d6336c;
-    font-weight: 600; font-size: 1.1rem;
+    margin-top: 40px; color: #d6336c;
+    font-weight: 600; font-size: 1rem;
     animation: pulse 1.5s infinite;
     text-shadow: 0 2px 10px rgba(255,255,255,0.8);
   }
@@ -155,20 +153,20 @@
     50% { opacity: 0.6; transform: scale(1.05); }
   }
 
-  /* ===== SLIDESHOW (Ken Burns) ===== */
+  /* ===== SLIDESHOW ===== */
   .slideshow {
     position: relative; width: 100%;
     aspect-ratio: 4 / 5;
-    max-height: 380px;
+    max-height: 320px;
     border-radius: 20px; overflow: hidden;
     margin-bottom: 16px;
-    box-shadow: 0 15px 35px rgba(255, 105, 135, 0.35), 0 0 0 4px #fff;
+    box-shadow: 0 10px 25px rgba(255, 105, 135, 0.3), 0 0 0 4px #fff;
   }
   .slideshow img {
     position: absolute; top: 0; left: 0;
     width: 100%; height: 100%;
     object-fit: cover; opacity: 0;
-    transition: opacity 1.2s ease-in-out;
+    transition: opacity 1s ease-in-out;
     transform: scale(1);
   }
   .slideshow img.active {
@@ -177,13 +175,12 @@
   }
   @keyframes kenBurns {
     from { transform: scale(1) translate(0,0); }
-    to { transform: scale(1.12) translate(-2%, -2%); }
+    to { transform: scale(1.1) translate(-1%, -1%); }
   }
 
-  /* Dots indicator */
   .dots {
-    display: flex; justify-content: center; gap: 8px;
-    margin-bottom: 16px;
+    display: flex; justify-content: center; gap: 6px;
+    margin-bottom: 14px;
   }
   .dots span {
     width: 8px; height: 8px;
@@ -193,69 +190,61 @@
   }
   .dots span.active {
     background: #ff4d6d;
-    width: 22px; border-radius: 4px;
+    width: 20px; border-radius: 4px;
   }
 
   /* ===== TEKS ===== */
   h1 {
-    color: #d6336c; font-size: 1.5rem;
-    margin-bottom: 12px; line-height: 1.35;
+    color: #d6336c; font-size: 1.4rem;
+    margin-bottom: 10px; line-height: 1.3;
     animation: glowText 2.5s ease-in-out infinite;
   }
   @keyframes glowText {
-    0%, 100% { text-shadow: 0 0 8px rgba(255,77,109,0.3); }
-    50% { text-shadow: 0 0 20px rgba(255,77,109,0.7), 0 0 30px rgba(255,133,161,0.5); }
+    0%, 100% { text-shadow: 0 0 8px rgba(255,77,109,0.2); }
+    50% { text-shadow: 0 0 15px rgba(255,77,109,0.5); }
   }
   p.text-body {
-    color: #555; font-size: 0.95rem;
-    line-height: 1.75; margin-bottom: 20px;
+    color: #555; font-size: 0.9rem;
+    line-height: 1.6; margin-bottom: 16px;
   }
   p.text-body strong { color: #d6336c; }
 
   .emoji-big {
-    font-size: 56px; display: block; margin-bottom: 12px;
+    font-size: 50px; display: block; margin-bottom: 10px;
     animation: beat 1.2s infinite;
-    filter: drop-shadow(0 6px 15px rgba(255,77,109,0.4));
+    filter: drop-shadow(0 4px 10px rgba(255,77,109,0.4));
   }
 
-  /* ===== SURAT ===== */
   .letter-box {
     background: linear-gradient(135deg, #fff5f7, #ffe8ee);
     border: 2px dashed #ffb3c1;
-    border-radius: 16px; padding: 20px;
-    margin-bottom: 20px; text-align: left;
-    font-size: 0.92rem; line-height: 1.75; color: #666;
-    box-shadow: 0 8px 20px rgba(255, 179, 193, 0.25) inset;
-    animation: fadeSlide 1s ease;
-  }
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    border-radius: 16px; padding: 16px;
+    margin-bottom: 16px; text-align: left;
+    font-size: 0.9rem; line-height: 1.6; color: #666;
+    box-shadow: 0 8px 20px rgba(255, 179, 193, 0.2) inset;
   }
   .letter-box strong { color: #d6336c; }
 
-  /* ===== BUTTONS ===== */
   .buttons {
-    display: flex; gap: 14px; justify-content: center;
-    flex-wrap: wrap; min-height: 54px; position: relative;
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; margin-top: 10px;
   }
   button {
-    border: none; padding: 14px 32px;
+    border: none; padding: 14px 28px;
     border-radius: 50px; font-size: 1rem; font-weight: 700;
     cursor: pointer; transition: all 0.25s;
-    letter-spacing: 0.3px;
   }
   #btnYes, #btnNext {
     background: linear-gradient(135deg, #ff4d6d, #ff85a1);
     color: white;
-    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.5);
+    box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
     animation: pulseGlow 2s infinite;
   }
   @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 10px 25px rgba(255, 77, 109, 0.5), 0 0 0 0 rgba(255,77,109,0.6); }
-    50% { box-shadow: 0 10px 30px rgba(255, 77, 109, 0.7), 0 0 0 14px rgba(255,77,109,0); }
+    0%, 100% { box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4), 0 0 0 0 rgba(255,77,109,0.5); }
+    50% { box-shadow: 0 8px 25px rgba(255, 77, 109, 0.6), 0 0 0 12px rgba(255,77,109,0); }
   }
-  #btnYes:hover, #btnNext:hover { transform: translateY(-3px) scale(1.06); }
+  #btnYes:hover, #btnNext:hover { transform: translateY(-2px) scale(1.05); }
 
   #btnNo {
     background: #eee; color: #666;
@@ -263,30 +252,25 @@
     transition: left 0.3s ease, top 0.3s ease, transform 0.2s;
   }
 
-  /* ===== SLIDE FINAL ===== */
-  #slideFinal h1 { font-size: 1.6rem; }
   .pesan-spesial {
     background: linear-gradient(135deg, #ffe0e9, #fff5f7);
-    border-radius: 16px; padding: 20px;
-    margin: 18px 0; font-style: italic;
-    color: #c9184a; font-size: 1rem; line-height: 1.75;
-    border-left: 5px solid #ff4d6d;
-    box-shadow: 0 10px 25px rgba(255,77,109,0.15);
-    animation: fadeSlide 1.2s ease;
+    border-radius: 16px; padding: 16px;
+    margin: 16px 0; font-style: italic;
+    color: #c9184a; font-size: 0.95rem; line-height: 1.6;
+    border-left: 4px solid #ff4d6d;
+    box-shadow: 0 8px 20px rgba(255,77,109,0.1);
   }
   .wa-btn {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white; padding: 15px 30px;
-    border-radius: 50px; font-size: 1rem; font-weight: 700;
+    color: white; padding: 14px 24px;
+    border-radius: 50px; font-size: 0.95rem; font-weight: 700;
     text-decoration: none;
-    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
-    transition: all 0.25s; margin-top: 8px;
-    animation: pulseGlow 2.5s infinite;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+    transition: all 0.25s; margin-top: 10px;
   }
-  .wa-btn:hover { transform: translateY(-3px) scale(1.06); }
+  .wa-btn:hover { transform: translateY(-2px) scale(1.05); }
 
-  /* ===== CONFETTI & HEART BURST ===== */
   .confetti {
     position: fixed; top: -20px; z-index: 5;
     animation: confettiFall linear forwards;
@@ -305,19 +289,18 @@
     to { transform: translate(var(--tx), var(--ty)) scale(1.4); opacity: 0; }
   }
 
-  /* ===== EQUALIZER ===== */
   .equalizer {
-    position: fixed; bottom: 18px; right: 18px;
+    position: fixed; bottom: 16px; right: 16px;
     display: none; gap: 3px; align-items: flex-end;
-    height: 26px; padding: 6px 10px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(255,105,135,0.4);
+    height: 24px; padding: 5px 8px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255,105,135,0.3);
     z-index: 10;
   }
   .equalizer.show { display: flex; }
   .equalizer span {
-    width: 4px;
+    width: 3px;
     background: linear-gradient(#ff4d6d, #ff85a1);
     border-radius: 2px;
     animation: eq 0.9s ease-in-out infinite;
@@ -327,40 +310,13 @@
   .equalizer span:nth-child(3) { animation-delay: 0.3s; }
   .equalizer span:nth-child(4) { animation-delay: 0.45s; }
   @keyframes eq {
-    0%, 100% { height: 6px; }
-    50% { height: 22px; }
-  }
-
-  /* ===== SCROLL HINT ===== */
-  .scroll-hint {
-    display: none;
-    margin-top: 14px;
-    font-size: 0.8rem;
-    color: #d6336c;
-    font-weight: 600;
-    animation: bounce 1.5s infinite;
-  }
-  .scroll-hint.show { display: block; }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-height: 700px) {
-    .slideshow { aspect-ratio: 1 / 1; }
-  }
-  @media (max-width: 360px) {
-    .slide { padding: 22px 16px; }
-    h1 { font-size: 1.3rem; }
-    .envelope { width: 180px; height: 124px; }
-    .envelope-flap { border-left: 90px solid transparent; border-right: 90px solid transparent; border-top: 68px solid #ff85a1; }
+    0%, 100% { height: 5px; }
+    50% { height: 18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- STAGE = wrapper scroll -->
 <div class="stage" id="stage">
 
   <!-- SLIDE 1: AMPLOP -->
@@ -382,7 +338,7 @@
     <div class="slideshow" id="slideshow">
       <img src="https://i.ibb.co.com/PSWbQCq/IMG-20261025-174312.jpg" alt="Acha" class="active">
       <img src="https://i.ibb.co.com/m5V61TdT/IMG-20261025-174249.jpg" alt="Acha">
-      <img src="https://i.ibb.co.com/PSWbQCq/IMG-20261025-174312.jpg" alt="Acha">
+      <img src="https://i.ibb.co.com/ymHnjbf9/IMG-20261025-174228.jpg" alt="Acha">
     </div>
     <div class="dots" id="dots">
       <span class="active"></span>
@@ -414,7 +370,6 @@
       <button id="btnYes">Mau! 💖</button>
       <button id="btnNo">Tidak 🙈</button>
     </div>
-    <p class="scroll-hint" id="scrollHint">⬇️ scroll pelan-pelan ya</p>
   </div>
 
   <!-- SLIDE 4: TERIMA KASIH + PESAN + WA -->
@@ -429,7 +384,7 @@
       — <strong>Dynan</strong> 💗
     </div>
 
-    <p class="text-body" style="font-size:0.85rem;color:#888;">
+    <p class="text-body" style="font-size:0.8rem;color:#888;">
       Kirim jawabanmu ke aku lewat WhatsApp ya, biar aku tau kamu udah buka website ini 🥺
     </p>
 
@@ -440,12 +395,10 @@
 
 </div>
 
-<!-- AUDIO -->
 <audio id="bgMusic" loop preload="auto" playsinline>
   <source src="acha.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Equalizer -->
 <div class="equalizer" id="equalizer">
   <span></span><span></span><span></span><span></span>
 </div>
@@ -453,7 +406,6 @@
 <script>
   const nomorWA = '6281252464739';
 
-  /* ===== PARTIKEL BACKGROUND ===== */
   const heartEmojis = ['💖','💕','💗','💓','❤️','💘','🌸','🌺'];
   setInterval(() => {
     const h = document.createElement('div');
@@ -467,7 +419,6 @@
     setTimeout(() => h.remove(), 10000);
   }, 400);
 
-  /* ===== BINTANG BERKELIP ===== */
   const stars = ['✨','⭐','🌟','💫'];
   setInterval(() => {
     const s = document.createElement('div');
@@ -481,16 +432,13 @@
     setTimeout(() => s.remove(), 4000);
   }, 500);
 
-  /* ===== SLIDE MANAGEMENT ===== */
   const stage = document.getElementById('stage');
   function showSlide(id) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    // Reset scroll ke atas tiap ganti slide
     stage.scrollTop = 0;
   }
 
-  /* ===== SLIDE 1: AMPLOP ===== */
   const envelope = document.getElementById('envelope');
   const music = document.getElementById('bgMusic');
   const equalizer = document.getElementById('equalizer');
@@ -510,7 +458,6 @@
     setTimeout(() => showSlide('slidePhotos'), 1200);
   });
 
-  /* ===== SLIDE 2: SLIDESHOW ===== */
   const slides = document.querySelectorAll('#slideshow img');
   const dots = document.querySelectorAll('#dots span');
   let slideIndex = 0;
@@ -524,7 +471,6 @@
 
   document.getElementById('btnNext').addEventListener('click', () => showSlide('slideLetter'));
 
-  /* ===== SLIDE 3: TOMBOL TIDAK MELAYANG ===== */
   const btnNo = document.getElementById('btnNo');
   function posisiAwalNo() {
     const r = btnNo.getBoundingClientRect();
@@ -546,7 +492,6 @@
   btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); melayang(); }, { passive: false });
   btnNo.addEventListener('click', (e) => { e.preventDefault(); melayang(); });
 
-  /* ===== SLIDE 3: TOMBOL YA ===== */
   document.getElementById('btnYes').addEventListener('click', (e) => {
     heartBurst(e.clientX, e.clientY);
     confettiBurst();
@@ -556,7 +501,6 @@
     }, 1000);
   });
 
-  /* ===== SLIDE 4: WA ===== */
   function siapkanWA() {
     const pesan = encodeURIComponent(
       'Hai Dynan! 💕\n\nAku udah buka website-nya, dan aku jawab: *IYA, AKU MAU JADI PACARMU!* 🥰\n\nTerima kasih ya udah se-serious ini sama aku. Aku juga sayang kamu. 💗'
@@ -564,21 +508,6 @@
     document.getElementById('waBtn').href = `https://wa.me/${nomorWA}?text=${pesan}`;
   }
 
-  /* ===== SCROLL HINT (muncul kalau konten panjang) ===== */
-  function cekScrollHint() {
-    const hint = document.getElementById('scrollHint');
-    const slide = document.getElementById('slideLetter');
-    if (slide.classList.contains('active')) {
-      if (slide.scrollHeight > window.innerHeight - 100) {
-        hint.classList.add('show');
-      } else {
-        hint.classList.remove('show');
-      }
-    }
-  }
-  setInterval(cekScrollHint, 800);
-
-  /* ===== HEART BURST ===== */
   function heartBurst(x, y) {
     const hearts = ['💖','💕','💗','💓','❤️','💘','💝'];
     for (let i = 0; i < 24; i++) {
@@ -597,7 +526,6 @@
     }
   }
 
-  /* ===== CONFETTI CANTIK ===== */
   function confettiBurst() {
     const items = ['💖','💕','✨','⭐','🌸','💫','🎉','🎊'];
     for (let i = 0; i < 80; i++) {
